@@ -20,6 +20,9 @@ Plugin 'gmarik/vundle'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
+Plugin 'easymotion/vim-easymotion'
+
+map  s <Plug>(easymotion-s)
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
@@ -112,3 +115,12 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
+
+" Needed configuration for Syntastic plugin
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
