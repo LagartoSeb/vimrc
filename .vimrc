@@ -9,8 +9,6 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-inoremap <C-o> <Esc><Esc>
-
 colorscheme Tomorrow-Night-Bright
 
 set clipboard=unnamedplus         " Enable copy selection to clipboard 
@@ -26,12 +24,12 @@ set showmatch                     " Better search experience.
 set number                        " Set number lines.
 set paste                         " Set formatted paste.
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
-let mapleader=","                 " Change leader to comma key.
 set history=100                   " Increase the buffer capacity.
 set tabstop=4                     " Tab settings.
 set shiftwidth=4                  " Tab settings.
 set softtabstop=4                 " Tab settings.
 set expandtab                     " Tab settings.
+let mapleader=","                 " Change leader to comma key.
 
 set list
 set listchars=tab:▸\ ,eol:¬
@@ -41,15 +39,15 @@ set dir=/tmp                      " Change the swap directory.
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
 
 " NERDTree config.
-nnoremap <leader>v :NERDTreeToggle<CR>
+nnoremap <leader>z :NERDTreeToggle<CR>
 
 "---------------------------------- Mappings ---------------------------------"
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <leader>a :Ack
+nnoremap <leader>w<Left> <C-w>h
+nnoremap <leader>w<Down> <C-w>j
+nnoremap <leader>w<Up> <C-w>k
+nnoremap <leader>w<Right> <C-w>l
+nnoremap <leader>ack :Ack
 " Give to ; the same functionality that :
 nnoremap ; :
 " Reselect the text that was pasted previously.
@@ -61,6 +59,9 @@ nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
 
+inoremap <C-e> <Esc>A
+
+nmap ,oo :on<CR>
 nmap ,nh :nohl<CR>
 nmap ,ev :e $MYVIMRC<CR>
 nmap ,bd :bd<CR>
@@ -78,4 +79,4 @@ vmap <C-x> "ayd
 
 " Map EasyAlign
 xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
