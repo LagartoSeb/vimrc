@@ -9,6 +9,17 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" Needed for Vundle
+set nocompatible
+" filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Vundle plugins
+Plugin 'gmarik/vundle'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" Colorscheme
 colorscheme Tomorrow-Night-Bright
 
 set clipboard=unnamedplus         " Enable copy selection to clipboard 
@@ -59,7 +70,7 @@ nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
 
-inoremap <C-e> <Esc>A
+inoremap <leader><Tab> <C-x><C-o>
 
 nmap ,oo :on<CR>
 nmap ,nh :nohl<CR>
@@ -80,3 +91,16 @@ vmap <C-x> "ayd
 " Map EasyAlign
 xmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+
+" Symbols for NERDTree-Git-Plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
