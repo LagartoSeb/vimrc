@@ -19,6 +19,7 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'mhinz/vim-signify'
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
@@ -50,7 +51,12 @@ set laststatus=2                  " Make the Powerline bar appear all time.
 set dir=/tmp                      " Change the swap directory.
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
 
-" NERDTree config.
+" CtrlP configuration
+map <leader>p :CtrlPBuffer<CR>
+let g:ctrlp_match_window_bottom   = 0
+let g:ctrlp_match_window_reversed = 0
+
+" NERDTree configuration
 nnoremap <leader>z :NERDTreeToggle<CR>
 
 "---------------------------------- Mappings ---------------------------------"
@@ -73,6 +79,7 @@ nnoremap <S-Left> 0
 
 inoremap <leader><Tab> <C-x><C-o>
 
+nmap ,pi :PluginInstall<CR>
 nmap ,oo :on<CR>
 nmap ,nh :nohl<CR>
 nmap ,ev :e $MYVIMRC<CR>
