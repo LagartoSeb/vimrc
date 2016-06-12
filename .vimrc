@@ -18,6 +18,7 @@ call vundle#rc()
 " Vundle plugins
 Plugin 'gmarik/vundle'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'airblade/vim-gitgutter'
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
