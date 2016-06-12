@@ -1,5 +1,5 @@
-" yg_ copy                        from cursor to end line
-" vG select                       from cursor to the bottom
+" yg_                             copy from cursor to end line
+" vG                              select from cursor to the bottom
 " :g/_pattern_/s/^/#/g            will comment out lines containing _pattern_
 " "*y                             copy te selection to clipboard
 " *                               highlight all the ocurrences in the cursor
@@ -21,8 +21,10 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'ervandew/supertab'
+Plugin 'mattn/emmet-vim'
 
-map  s <Plug>(easymotion-s)
+map easy <Plug>(easymotion-s)
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
@@ -38,7 +40,7 @@ set hlsearch                      " Highlight the search occurrences.
 set incsearch                     " Better search experience.
 set showmatch                     " Better search experience.
 set number                        " Set number lines.
-set paste                         " Set formatted paste.
+" set paste                         " Set formatted paste.
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set history=100                   " Increase the buffer capacity.
 set tabstop=4                     " Tab settings.
@@ -82,6 +84,7 @@ nnoremap <S-Left> 0
 
 inoremap <leader><Tab> <C-x><C-o>
 
+nmap ,sp :set paste<CR>
 nmap ,pi :PluginInstall<CR>
 nmap ,oo :on<CR>
 nmap ,nh :nohl<CR>
@@ -124,3 +127,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" NeoComplCache
+let g:neocomplcache_enable_at_startup = 1
