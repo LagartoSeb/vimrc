@@ -3,6 +3,7 @@
 " :g/_pattern_/s/^/#/g            will comment out lines containing _pattern_
 " "*y                             copy te selection to clipboard
 " *                               highlight all the ocurrences in the cursor
+" :m                              move to X line
 
 " Needed for pathogen
 execute pathogen#infect()
@@ -23,6 +24,8 @@ Plugin 'mhinz/vim-signify'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'ervandew/supertab'
 Plugin 'mattn/emmet-vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'matze/vim-move'
 
 map easy <Plug>(easymotion-s)
 
@@ -40,13 +43,14 @@ set hlsearch                      " Highlight the search occurrences.
 set incsearch                     " Better search experience.
 set showmatch                     " Better search experience.
 set number                        " Set number lines.
-" set paste                         " Set formatted paste.
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set history=100                   " Increase the buffer capacity.
 set tabstop=4                     " Tab settings.
 set shiftwidth=4                  " Tab settings.
 set softtabstop=4                 " Tab settings.
 set expandtab                     " Tab settings.
+set tabstop=4                     " Tab size 4 spaces
+set noexpandtab                   " Use tabs, no spaces.
 let mapleader=","                 " Change leader to comma key.
 
 set list
@@ -81,9 +85,13 @@ nnoremap <S-Down> G
 nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
+" nnoremap <S-w> :m .-2<CR> NOT NEEDED
+" nnoremap <S-x> :m .+1<CR> NOT NEEDED
 
-inoremap <leader><Tab> <C-x><C-o>
+inoremap ,<Tab> <C-x><C-o>
 
+nmap ,re :%retab!<CR>
+nmap ,sn :set nopaste<CR>
 nmap ,sp :set paste<CR>
 nmap ,pi :PluginInstall<CR>
 nmap ,oo :on<CR>
@@ -130,3 +138,6 @@ let g:syntastic_check_on_wq = 0
 
 " NeoComplCache
 let g:neocomplcache_enable_at_startup = 1
+
+" Vim-Move
+let g:move_key_modifier = 'S'
