@@ -4,35 +4,40 @@
 " "*y                             copy te selection to clipboard
 " *                               highlight all the ocurrences in the cursor
 " :m                              move to X line
-
-" Needed for pathogen
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
+" :g/#/d                          remove all lines that begin with #
 
 " Needed for Vundle
 set nocompatible
-" filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
+syntax on
 
 " Vundle plugins
-Plugin 'gmarik/vundle'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mhinz/vim-signify'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'ervandew/supertab'
-Plugin 'mattn/emmet-vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'matze/vim-move'
+Plugin 'mileszs/ack.vim'  " ack.vim
+Plugin 'kien/ctrlp.vim' " ctrlp.vim
+Plugin 'mattn/emmet-vim' " emmet-vim
+Plugin 'sjl/gundo.vim' " gundo.vim
+Plugin 'Shougo/neocomplcache.vim' " neocomplcache.vim
+Plugin 'scrooloose/nerdcommenter' " nerdcommenter
+Plugin 'Xuyuanp/nerdtree-git-plugin' " nerdtree-git-plugin
+Plugin 'scrooloose/nerdtree' " nerdtree
+Plugin 'ervandew/supertab' " supertab
+" Plugin 'syntastic' 
+Plugin 'vim-airline/vim-airline' " vim-airline
+Plugin 'junegunn/vim-easy-align' " vim-easy-align
+Plugin 'tpope/vim-fugitive' " vim-fugitive
+Plugin 'airblade/vim-gitgutter' " vim-gitgutter
+Plugin 'elzr/vim-json' " vim-json
+Plugin 'matze/vim-move' " vim-move
+Plugin 'mhinz/vim-signify' " vim-signify
+Plugin 'tpope/vim-vinegar' " vim-vinegar
+Plugin 'gmarik/vundle' " vundle
 
 map easy <Plug>(easymotion-s)
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
 
-set clipboard=unnamedplus         " Enable copy selection to clipboard 
 set nowrap                        " Quit wrapping in all files.
 set mouse=a                       " Enable mouse integration.
 set cursorline                    " Highlight the cursor line.
@@ -42,7 +47,8 @@ set smartcase                     " Enable functionality to upper and downcase s
 set hlsearch                      " Highlight the search occurrences.
 set incsearch                     " Better search experience.
 set showmatch                     " Better search experience.
-set number                        " Set number lines.
+" set number                        " Set number lines.
+set relativenumber
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set history=100                   " Increase the buffer capacity.
 set tabstop=4                     " Tab settings.
@@ -85,11 +91,15 @@ nnoremap <S-Down> G
 nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
-" nnoremap <S-w> :m .-2<CR> NOT NEEDED
-" nnoremap <S-x> :m .+1<CR> NOT NEEDED
 
-inoremap ,<Tab> <C-x><C-o>
+" Insert mode mappings
+inoremap <leader>o <C-o>
+inoremap <leader>a <C-o>I
+inoremap <leader>s <C-o>A
+inoremap ,, <Esc>
 
+nmap ,Gt :GundoToggle<CR>
+nmap ,Gh :GundoHide<CR>
 nmap ,re :%retab!<CR>
 nmap ,sn :set nopaste<CR>
 nmap ,sp :set paste<CR>
@@ -101,11 +111,12 @@ nmap ,bd :bd<CR>
 nmap ,script :scriptnames<CR>
 nmap ,gv :e /Applications/MacVim.app/Contents/Resources/vim/gvimrc<CR>
 nmap ,sc :source %<CR>
-
-" Map copy and paste
-vmap <C-c> "ay 
-nmap <C-v> "aP
-vmap <C-x> "ayd
+nmap ,cp :set clipboard=unnamedplus<CR>
+nmap ,rn :set relativenumber<CR>
+nmap ,qa :qa<CR>
+nmap ,w  :w<CR>
+nmap ,vs :vsplit<CR>
+nmap ,ss :split<CR>
 
 " Automatically source the .vimrc file on save
 " autocmd BufWritePost .vimrc source %
@@ -126,15 +137,6 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
-
-" Needed configuration for Syntastic plugin
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " NeoComplCache
 let g:neocomplcache_enable_at_startup = 1
