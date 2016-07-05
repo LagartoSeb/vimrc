@@ -5,39 +5,56 @@
 " *                               highlight all the ocurrences in the cursor
 " :m                              move to X line
 " :g/#/d                          remove all lines that begin with #
+" zz                              place the current line in the center of the screen
+" vi'                             select in visual mode all inside ' tags
+" va'                             select in visual mode all inside ' tags including them
+" U                               Visual mode: convert selected text to uppercase
+" u                               Visual mode: convert selected text to lowercase
+" :%s/[A-Z]/\L&/g                 Command mode: convert criteria to lowercase
+" :%s/[A-Z]/\U&/g                 Command mode: convert criteria to uppercase
 
 " Needed for Vundle
 set nocompatible
+filetype off
+
+" Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
-syntax on
 
 " Vundle plugins
-Plugin 'mileszs/ack.vim'  " ack.vim
-Plugin 'kien/ctrlp.vim' " ctrlp.vim
-Plugin 'mattn/emmet-vim' " emmet-vim
-Plugin 'sjl/gundo.vim' " gundo.vim
-Plugin 'Shougo/neocomplcache.vim' " neocomplcache.vim
-Plugin 'scrooloose/nerdcommenter' " nerdcommenter
+Plugin 'mileszs/ack.vim'             " ack.vim
+Plugin 'kien/ctrlp.vim'              " ctrlp.vim
+Plugin 'mattn/emmet-vim'             " emmet-vim
+Plugin 'sjl/gundo.vim'               " gundo.vim
+Plugin 'Shougo/neocomplcache.vim'    " neocomplcache.vim
+Plugin 'scrooloose/nerdcommenter'    " nerdcommenter
 Plugin 'Xuyuanp/nerdtree-git-plugin' " nerdtree-git-plugin
-Plugin 'scrooloose/nerdtree' " nerdtree
-Plugin 'ervandew/supertab' " supertab
-" Plugin 'syntastic' 
-Plugin 'vim-airline/vim-airline' " vim-airline
-Plugin 'junegunn/vim-easy-align' " vim-easy-align
-Plugin 'tpope/vim-fugitive' " vim-fugitive
-Plugin 'airblade/vim-gitgutter' " vim-gitgutter
-Plugin 'elzr/vim-json' " vim-json
-Plugin 'matze/vim-move' " vim-move
-Plugin 'mhinz/vim-signify' " vim-signify
-Plugin 'tpope/vim-vinegar' " vim-vinegar
-Plugin 'gmarik/vundle' " vundle
+Plugin 'scrooloose/nerdtree'         " nerdtree
+Plugin 'ervandew/supertab'           " supertab
+                                     " Plugin 'syntastic'
+Plugin 'vim-airline/vim-airline'     " vim-airline
+Plugin 'junegunn/vim-easy-align'     " vim-easy-align
+Plugin 'tpope/vim-fugitive'          " vim-fugitive
+Plugin 'airblade/vim-gitgutter'      " vim-gitgutter
+Plugin 'elzr/vim-json'               " vim-json
+Plugin 'matze/vim-move'              " vim-move
+Plugin 'mhinz/vim-signify'           " vim-signify
+Plugin 'tpope/vim-vinegar'           " vim-vinegar
+Plugin 'Townk/vim-autoclose'         " vim-surround
+Plugin 'Raimondi/delimitMate'
+Plugin 'luochen1990/rainbow'
+Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'edsono/vim-matchit'
+" Plugin 'msanders/snipmate.vim'     " the most recently version of snipmate-vim
+Plugin 'gmarik/vundle'               " vundle
 
 map easy <Plug>(easymotion-s)
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
 
+syntax on                         " Enable syntax
+set t_CO=256                      " Use 256 colors, terminal vim
 set nowrap                        " Quit wrapping in all files.
 set mouse=a                       " Enable mouse integration.
 set cursorline                    " Highlight the cursor line.
@@ -47,7 +64,7 @@ set smartcase                     " Enable functionality to upper and downcase s
 set hlsearch                      " Highlight the search occurrences.
 set incsearch                     " Better search experience.
 set showmatch                     " Better search experience.
-" set number                        " Set number lines.
+" set number                      " Set number lines.
 set relativenumber
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set history=100                   " Increase the buffer capacity.
@@ -61,15 +78,15 @@ let mapleader=","                 " Change leader to comma key.
 
 set list
 set listchars=tab:▸\ ,eol:¬
-
 set laststatus=2                  " Make the Powerline bar appear all time.
 set dir=/tmp                      " Change the swap directory.
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
 
 " CtrlP configuration
 map <leader>p :CtrlPBuffer<CR>
-let g:ctrlp_match_window_bottom   = 0
-let g:ctrlp_match_window_reversed = 0
+" let g:ctrlp_match_window_bottom   = 0
+" let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
 
 " NERDTree configuration
 nnoremap <leader>z :NERDTreeToggle<CR>
@@ -104,7 +121,8 @@ nmap ,re :%retab!<CR>
 nmap ,sn :set nopaste<CR>
 nmap ,sp :set paste<CR>
 nmap ,pi :PluginInstall<CR>
-nmap ,oo :on<CR>
+nmap ,on :on<CR>
+nmap ,hl :set hlsearch<CR>
 nmap ,nh :nohl<CR>
 nmap ,ev :e $MYVIMRC<CR>
 nmap ,bd :bd<CR>
@@ -117,6 +135,8 @@ nmap ,qa :qa<CR>
 nmap ,w  :w<CR>
 nmap ,vs :vsplit<CR>
 nmap ,ss :split<CR>
+nmap ,ls :ls<CR>
+nmap ,a  :Ack<CR>
 
 " Automatically source the .vimrc file on save
 " autocmd BufWritePost .vimrc source %
@@ -139,7 +159,16 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 " NeoComplCache
-let g:neocomplcache_enable_at_startup = 1
+" let g:neocomplcache_enable_at_startup  = 1 " On
+" let g:neocomplcache_enable_ignore_case = 0 " Case insensitive
+" let g:neocomplcache_enable_auto_select = 1 " Auto selects the first match
 
 " Vim-Move
 let g:move_key_modifier = 'S'
+
+" AutoClose
+let g:AutoClosePairs = "() <> [] {} \"""
+
+" Vim-markmultiple
+let g:mark_multiple_trigger = "<C-n>"
+
