@@ -5,6 +5,7 @@
 " *                               highlight all the ocurrences in the cursor
 " :m                              move to X line
 " :g/#/d                          remove all lines that begin with #
+" :g/^$/d                         remove all empty lines
 " zz                              place the current line in the center of the screen
 " vi'                             select in visual mode all inside ' tags
 " va'                             select in visual mode all inside ' tags including them
@@ -12,6 +13,12 @@
 " u                               Visual mode: convert selected text to lowercase
 " :%s/[A-Z]/\L&/g                 Command mode: convert criteria to lowercase
 " :%s/[A-Z]/\U&/g                 Command mode: convert criteria to uppercase
+" b                               Move one word back
+" w                               Move one word forward
+" ciw                             Delete word in cursor and go Insert mode
+" d0                              NORMAL MODE: delete content line to the beginning of the line
+" <C-U>                           INSERT MODE: delete content line to the beginning of the line
+" dg                              Delete grom the current line to the end of file
 
 " Needed for Vundle
 set nocompatible
@@ -31,7 +38,6 @@ Plugin 'scrooloose/nerdcommenter'    " nerdcommenter
 Plugin 'Xuyuanp/nerdtree-git-plugin' " nerdtree-git-plugin
 Plugin 'scrooloose/nerdtree'         " nerdtree
 Plugin 'ervandew/supertab'           " supertab
-                                     " Plugin 'syntastic'
 Plugin 'vim-airline/vim-airline'     " vim-airline
 Plugin 'junegunn/vim-easy-align'     " vim-easy-align
 Plugin 'tpope/vim-fugitive'          " vim-fugitive
@@ -47,8 +53,6 @@ Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'edsono/vim-matchit'
 " Plugin 'msanders/snipmate.vim'     " the most recently version of snipmate-vim
 Plugin 'gmarik/vundle'               " vundle
-
-map easy <Plug>(easymotion-s)
 
 " Colorscheme
 colorscheme Tomorrow-Night-Bright
@@ -84,9 +88,20 @@ let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline s
 
 " CtrlP configuration
 map <leader>p :CtrlPBuffer<CR>
-" let g:ctrlp_match_window_bottom   = 0
-" let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
+" CtrlP auto cache clearing.
+function! SetupCtrlP()
+  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
+    augroup CtrlPExtension
+      autocmd!
+      autocmd FocusGained  * CtrlPClearCache
+      autocmd BufWritePost * CtrlPClearCache
+    augroup END
+  endif
+endfunction
+if has("autocmd")
+  autocmd VimEnter * :call SetupCtrlP()
+endif
 
 " NERDTree configuration
 nnoremap <leader>z :NERDTreeToggle<CR>
@@ -114,9 +129,10 @@ inoremap <leader>o <C-o>
 inoremap <leader>a <C-o>I
 inoremap <leader>s <C-o>A
 inoremap ,, <Esc>
+inoremap ,dw <Esc>ciw
 
-nmap ,Gt :GundoToggle<CR>
-nmap ,Gh :GundoHide<CR>
+nmap ,gt :GundoToggle<CR>
+nmap ,gh :GundoHide<CR>
 nmap ,re :%retab!<CR>
 nmap ,sn :set nopaste<CR>
 nmap ,sp :set paste<CR>
@@ -159,7 +175,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 " NeoComplCache
-" let g:neocomplcache_enable_at_startup  = 1 " On
+let g:neocomplcache_enable_at_startup  = 1 " On
 " let g:neocomplcache_enable_ignore_case = 0 " Case insensitive
 " let g:neocomplcache_enable_auto_select = 1 " Auto selects the first match
 
@@ -171,4 +187,3 @@ let g:AutoClosePairs = "() <> [] {} \"""
 
 " Vim-markmultiple
 let g:mark_multiple_trigger = "<C-n>"
-
