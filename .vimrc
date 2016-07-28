@@ -20,24 +20,30 @@
 " <C-U>                           INSERT MODE: delete content line to the beginning of the line
 " dg                              Delete grom the current line to the end of file
 
+" Needed for Hyperterm correct behaviour
+set encoding=utf-8
+
 " Needed for Vundle
 set nocompatible
-filetype off
+filetype plugin on 
+" filetype off
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 " Vundle plugins
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'mileszs/ack.vim'             " ack.vim
 Plugin 'kien/ctrlp.vim'              " ctrlp.vim
 Plugin 'mattn/emmet-vim'             " emmet-vim
 Plugin 'sjl/gundo.vim'               " gundo.vim
-Plugin 'Shougo/neocomplcache.vim'    " neocomplcache.vim
+" Plugin 'Shougo/neocomplcache.vim'    " neocomplcache.vim
 Plugin 'scrooloose/nerdcommenter'    " nerdcommenter
 Plugin 'Xuyuanp/nerdtree-git-plugin' " nerdtree-git-plugin
 Plugin 'scrooloose/nerdtree'         " nerdtree
-Plugin 'ervandew/supertab'           " supertab
+" Plugin 'ervandew/supertab'           " supertab
 Plugin 'vim-airline/vim-airline'     " vim-airline
 Plugin 'junegunn/vim-easy-align'     " vim-easy-align
 Plugin 'tpope/vim-fugitive'          " vim-fugitive
@@ -173,6 +179,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
+let NERDTreeIgnore = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
 
 " NeoComplCache
 let g:neocomplcache_enable_at_startup  = 1 " On
