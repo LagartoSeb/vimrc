@@ -1,24 +1,4 @@
-" yg_                             copy from cursor to end line
-" vG                              select from cursor to the bottom
-" :g/_pattern_/s/^/#/g            will comment out lines containing _pattern_
-" "*y                             copy te selection to clipboard
-" *                               highlight all the ocurrences in the cursor
-" :m                              move to X line
-" :g/#/d                          remove all lines that begin with #
-" :g/^$/d                         remove all empty lines
-" zz                              place the current line in the center of the screen
-" vi'                             select in visual mode all inside ' tags
-" va'                             select in visual mode all inside ' tags including them
-" U                               Visual mode: convert selected text to uppercase
-" u                               Visual mode: convert selected text to lowercase
-" :%s/[A-Z]/\L&/g                 Command mode: convert criteria to lowercase
-" :%s/[A-Z]/\U&/g                 Command mode: convert criteria to uppercase
-" b                               Move one word back
-" w                               Move one word forward
-" ciw                             Delete word in cursor and go Insert mode
-" d0                              NORMAL MODE: delete content line to the beginning of the line
-" <C-U>                           INSERT MODE: delete content line to the beginning of the line
-" dg                              Delete grom the current line to the end of file
+colorscheme jellybeans
 
 " Needed for Hyperterm correct behaviour
 set encoding=utf-8
@@ -32,36 +12,14 @@ filetype plugin on
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
-" Vundle plugins
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'mileszs/ack.vim'             " ack.vim
-Plugin 'kien/ctrlp.vim'              " ctrlp.vim
-Plugin 'mattn/emmet-vim'             " emmet-vim
-Plugin 'sjl/gundo.vim'               " gundo.vim
-" Plugin 'Shougo/neocomplcache.vim'    " neocomplcache.vim
-Plugin 'scrooloose/nerdcommenter'    " nerdcommenter
-Plugin 'Xuyuanp/nerdtree-git-plugin' " nerdtree-git-plugin
-Plugin 'scrooloose/nerdtree'         " nerdtree
-" Plugin 'ervandew/supertab'           " supertab
-Plugin 'vim-airline/vim-airline'     " vim-airline
-Plugin 'junegunn/vim-easy-align'     " vim-easy-align
-Plugin 'tpope/vim-fugitive'          " vim-fugitive
-Plugin 'airblade/vim-gitgutter'      " vim-gitgutter
-Plugin 'elzr/vim-json'               " vim-json
-Plugin 'matze/vim-move'              " vim-move
-Plugin 'mhinz/vim-signify'           " vim-signify
-Plugin 'tpope/vim-vinegar'           " vim-vinegar
-Plugin 'Townk/vim-autoclose'         " vim-surround
-Plugin 'Raimondi/delimitMate'
-Plugin 'luochen1990/rainbow'
-Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'edsono/vim-matchit'
-" Plugin 'msanders/snipmate.vim'     " the most recently version of snipmate-vim
-Plugin 'gmarik/vundle'               " vundle
-
-" Colorscheme
-colorscheme Tomorrow-Night-Bright
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdtree' 
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'vim-airline/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-vinegar'
+Plugin 'Townk/vim-autoclose'
 
 syntax on                         " Enable syntax
 set t_CO=256                      " Use 256 colors, terminal vim
@@ -74,20 +32,17 @@ set smartcase                     " Enable functionality to upper and downcase s
 set hlsearch                      " Highlight the search occurrences.
 set incsearch                     " Better search experience.
 set showmatch                     " Better search experience.
-" set number                      " Set number lines.
-set relativenumber
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set history=100                   " Increase the buffer capacity.
-set tabstop=4                     " Tab settings.
-set shiftwidth=4                  " Tab settings.
-set softtabstop=4                 " Tab settings.
-set expandtab                     " Tab settings.
-set tabstop=4                     " Tab size 4 spaces
+set tabstop=2                     " Tab settings.
+set shiftwidth=2                  " Tab settings.
+set softtabstop=2                 " Tab settings.
 set noexpandtab                   " Use tabs, no spaces.
 let mapleader=","                 " Change leader to comma key.
 
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:\ \ ,eol:¬
+
 set laststatus=2                  " Make the Powerline bar appear all time.
 set dir=/tmp                      " Change the swap directory.
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
@@ -95,6 +50,8 @@ let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline s
 " CtrlP configuration
 map <leader>p :CtrlPBuffer<CR>
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
+let g:ctrlp_working_path_mode = 0
+
 " CtrlP auto cache clearing.
 function! SetupCtrlP()
   if exists("g:loaded_ctrlp") && g:loaded_ctrlp
@@ -112,7 +69,6 @@ endif
 " NERDTree configuration
 nnoremap <leader>z :NERDTreeToggle<CR>
 
-"---------------------------------- Mappings ---------------------------------"
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nnoremap <leader>w<Left> <C-w>h
 nnoremap <leader>w<Down> <C-w>j
@@ -137,36 +93,6 @@ inoremap <leader>s <C-o>A
 inoremap ,, <Esc>
 inoremap ,dw <Esc>ciw
 
-nmap ,gt :GundoToggle<CR>
-nmap ,gh :GundoHide<CR>
-nmap ,re :%retab!<CR>
-nmap ,sn :set nopaste<CR>
-nmap ,sp :set paste<CR>
-nmap ,pi :PluginInstall<CR>
-nmap ,on :on<CR>
-nmap ,hl :set hlsearch<CR>
-nmap ,nh :nohl<CR>
-nmap ,ev :e $MYVIMRC<CR>
-nmap ,bd :bd<CR>
-nmap ,script :scriptnames<CR>
-nmap ,gv :e /Applications/MacVim.app/Contents/Resources/vim/gvimrc<CR>
-nmap ,sc :source %<CR>
-nmap ,cp :set clipboard=unnamedplus<CR>
-nmap ,rn :set relativenumber<CR>
-nmap ,qa :qa<CR>
-nmap ,w  :w<CR>
-nmap ,vs :vsplit<CR>
-nmap ,ss :split<CR>
-nmap ,ls :ls<CR>
-nmap ,a  :Ack<CR>
-
-" Automatically source the .vimrc file on save
-" autocmd BufWritePost .vimrc source %
-
-" Map EasyAlign
-xmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-
 " Symbols for NERDTree-Git-Plugin
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -181,16 +107,4 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 let NERDTreeIgnore = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
 
-" NeoComplCache
-let g:neocomplcache_enable_at_startup  = 1 " On
-" let g:neocomplcache_enable_ignore_case = 0 " Case insensitive
-" let g:neocomplcache_enable_auto_select = 1 " Auto selects the first match
-
-" Vim-Move
-let g:move_key_modifier = 'S'
-
-" AutoClose
 let g:AutoClosePairs = "() <> [] {} \"""
-
-" Vim-markmultiple
-let g:mark_multiple_trigger = "<C-n>"
