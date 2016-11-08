@@ -1,4 +1,5 @@
-colorscheme jellybeans
+" colorscheme jellybeans
+colorscheme badwolf
 
 " Needed for Hyperterm correct behaviour
 set encoding=utf-8
@@ -20,6 +21,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-vinegar'
 Plugin 'Townk/vim-autoclose'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'sjl/badwolf'
 
 syntax on                         " Enable syntax
 set t_CO=256                      " Use 256 colors, terminal vim
@@ -108,3 +111,6 @@ let g:NERDTreeIndicatorMapCustom = {
 let NERDTreeIgnore = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
 
 let g:AutoClosePairs = "() <> [] {} \"""
+
+" YouCompleteMe config.
+let g:ycm_server_python_interpreter = '/usr/bin/python'
