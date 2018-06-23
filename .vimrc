@@ -1,4 +1,3 @@
-" colorscheme jellybeans
 colorscheme badwolf
 
 " Needed for Hyperterm correct behaviour
@@ -7,26 +6,60 @@ set encoding=utf-8
 " Needed for Vundle
 set nocompatible
 filetype plugin on 
-" filetype off
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+" Vim-Plug plugins
+call plug#begin('~/.vim/plugged')
+Plug 'jalvesaq/vimcmdline'
+Plug 'joshdick/onedark.vim'
+Plug 'mileszs/ack.vim'
+Plug 'ruanyl/vim-gh-line'
+Plug 'sheerun/vim-polyglot'
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rhubarb'
+Plug 'w0rp/ale'
+Plug 'ElmCast/elm-vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'isRuslan/vim-es6'
+Plug 'kien/ctrlp.vim'
+Plug 'henrik/vim-ruby-runner'
+Plug 'Yggdroot/indentLine'
+Plug 'scrooloose/nerdtree' 
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'Townk/vim-autoclose'
+Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'tpope/vim-surround'
+Plug 'ervandew/supertab'
+Plug 'sjl/badwolf'
+call plug#end()
 
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/nerdtree' 
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'vim-airline/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-vinegar'
-Plugin 'Townk/vim-autoclose'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'sjl/badwolf'
+" RSpec.vim mappings
+map <Leader>lc :call RunCurrentSpecFile()<CR>
+map <Leader>ls :call RunNearestSpec()<CR>
+map <Leader>ñl :call RunLastSpec()<CR>
+map <Leader>ña :call RunAllSpecs()<CR>
+" let g:rspec_runner = "os_x_iterm2"
 
+" Configure for Ruby development
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd BufAdd BufRead filetype detect
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " Exclude files in /tmp - *nix
+set statusline=%{FugitiveStatusline()}
+set nobackup                      " Do not generate .sw or backup files.
+set autoread                      " Enables autoload for files that change when are open
+set autoindent                    " Enables a new line with the same indentation
+set clipboard=unnamedplus         " Use system clipboard for copy and paste.
 syntax on                         " Enable syntax
 set t_CO=256                      " Use 256 colors, terminal vim
 set nowrap                        " Quit wrapping in all files.
+set noswapfile                    " Do not generate swap files.
 set mouse=a                       " Enable mouse integration.
 set cursorline                    " Highlight the cursor line.
 set showmode                      " Show the current mode.
@@ -40,20 +73,41 @@ set history=100                   " Increase the buffer capacity.
 set tabstop=2                     " Tab settings.
 set shiftwidth=2                  " Tab settings.
 set softtabstop=2                 " Tab settings.
-set noexpandtab                   " Use tabs, no spaces.
+set expandtab                     " Use tabs, no spaces.
+set number
+set list
+set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
+set laststatus=2                  " With 2 makes the Powerline bar appear all time.
+
 let mapleader=","                 " Change leader to comma key.
 
-set list
-set listchars=tab:\ \ ,eol:¬
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" Functions
 
-set laststatus=2                  " Make the Powerline bar appear all time.
-set dir=/tmp                      " Change the swap directory.
-let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
+" Relative numbering
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set nornu
+    set number
+  else
+    set rnu
+  endif
+endfunc
+
+" Toggle between normal and relative numbering.
+nnoremap <leader>re :call NumberToggle()<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" Mappings
+
+" vnoremap's
+map <leader>cc :w !xsel -i -b<CR>
+
+" IndentLine configuration
+let g:indentLine_enabled = 0 " Disabled by default 
+" Toggle IndentLines plugin
+nnoremap <leader>li :IndentLinesToggle<cr> 
 
 " CtrlP configuration
 map <leader>p :CtrlPBuffer<CR>
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:30,results:30'
-let g:ctrlp_working_path_mode = 0
 
 " CtrlP auto cache clearing.
 function! SetupCtrlP()
@@ -77,7 +131,6 @@ nnoremap <leader>w<Left> <C-w>h
 nnoremap <leader>w<Down> <C-w>j
 nnoremap <leader>w<Up> <C-w>k
 nnoremap <leader>w<Right> <C-w>l
-nnoremap <leader>ack :Ack
 " Give to ; the same functionality that :
 nnoremap ; :
 " Reselect the text that was pasted previously.
@@ -88,6 +141,11 @@ nnoremap <S-Down> G
 nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
+nnoremap q b
+" Jump to the middle of the current line
+nnoremap gm :call cursor(0, len(getline('.'))/2)<CR>
+" Reload syntax
+nnoremap <Leader>fd :filetype detect<CR>
 
 " Insert mode mappings
 inoremap <leader>o <C-o>
@@ -110,7 +168,54 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 let NERDTreeIgnore = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
 
-let g:AutoClosePairs = "() <> [] {} \"""
+let g:AutoClosePairs = "() <> [] {} ''"
 
 " YouCompleteMe config.
 let g:ycm_server_python_interpreter = '/usr/bin/python'
+
+" Ruby Runner configuration
+let g:RubyRunner_open_below = 1
+let g:RubyRunner_window_size = 5
+let g:RubyRunner_keep_focus_key = '<Leader>r' " Run Ruby Runner but keep focus on file
+
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|tmp)|(\.(swp|ico|git|svn))$'
+
+" Silent highlight search 
+nmap <silent> ./ :nohlsearch<CR>
+
+" VimEasyAlign configuration
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Terminal Mappings
+tnoremap <Esc> <C-\><C-n>
+
+
+" ALE
+  " Load all plugins now.
+  " Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+  " Load all of the helptags now, after plugins have been loaded.
+  " All messages and errors will be ignored.
+silent! helptags ALL<Paste>
+  " Configure Fixers
+let g:ale_linters = { 'ruby': ['rubocop'], 'javascript': ['eslint'] }
+
+" VIM-AIRLINE
+let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
+let g:airline#extensions#tabline#buffer_nr_show = 1 " Show buffer number
+let g:airline#extensions#hunks#enabled = 0 " Show current working branch name
+let g:airline#extensions#branch#enabled = 1 " Show current working branch name
+
+" VIMCMDLine
+let cmdline_map_start = '<Leader>oc'       " Open a console (Open Console)
+let cmdline_map_quit = '<Leader>qc'        " Quit the console (Quit Console)
+" let cmdline_map_send_and_stay = '<Leader>cs'  " Send and stay in console (Console Stay)
+" let cmdline_map_source_fum = '<Leader>fc'     " Send entire file to console (File to Console)
+let cmdline_map_send           = '<Space>'
+" Color Configuration
+let cmdline_follow_colorscheme = 1
+
