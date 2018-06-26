@@ -7,8 +7,11 @@ set encoding=utf-8
 set nocompatible
 filetype plugin on 
 
+set guifont=Fura\ Code:h12
+
 " Vim-Plug plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
+" Plug 'ryanoasis/vim-devicons'
 Plug 'jalvesaq/vimcmdline'
 Plug 'joshdick/onedark.vim'
 Plug 'mileszs/ack.vim'
@@ -44,7 +47,6 @@ map <Leader>lc :call RunCurrentSpecFile()<CR>
 map <Leader>ls :call RunNearestSpec()<CR>
 map <Leader>ñl :call RunLastSpec()<CR>
 map <Leader>ña :call RunAllSpecs()<CR>
-" let g:rspec_runner = "os_x_iterm2"
 
 " Configure for Ruby development
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
@@ -76,7 +78,7 @@ set softtabstop=2                 " Tab settings.
 set expandtab                     " Use tabs, no spaces.
 set number
 set list
-set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
+" set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•<Paste>
 set laststatus=2                  " With 2 makes the Powerline bar appear all time.
 
 let mapleader=","                 " Change leader to comma key.
@@ -151,8 +153,12 @@ nnoremap <Leader>fd :filetype detect<CR>
 inoremap <leader>o <C-o>
 inoremap <leader>a <C-o>I
 inoremap <leader>s <C-o>A
-inoremap ,, <Esc>
+inoremap ,, <Esc>:w<CR>
 inoremap ,dw <Esc>ciw
+" Keep identation when creating a new line
+inoremap <C-Return> <CR><CR><C-o>k<Tab>
+" Keep identation when opening curly braces
+inoremap { {<CR>}<up><end><CR>
 
 " Symbols for NERDTree-Git-Plugin
 let g:NERDTreeIndicatorMapCustom = {
@@ -218,4 +224,3 @@ let cmdline_map_quit = '<Leader>qc'        " Quit the console (Quit Console)
 let cmdline_map_send           = '<Space>'
 " Color Configuration
 let cmdline_follow_colorscheme = 1
-
