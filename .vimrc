@@ -11,7 +11,13 @@ set guifont=Fura\ Code:h12
 
 " Vim-Plug plugins
 call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'ryanoasis/vim-devicons'
+Plug 'andreyorst/SimpleSnippets-snippets'
+Plug 'andreyorst/SimpleSnippets.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'dyng/ctrlsf.vim'
+Plug 'mattn/emmet-vim'
 Plug 'jalvesaq/vimcmdline'
 Plug 'joshdick/onedark.vim'
 Plug 'mileszs/ack.vim'
@@ -52,6 +58,7 @@ map <Leader>ña :call RunAllSpecs()<CR>
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd BufAdd BufRead filetype detect
 
+set colorcolumn
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " Exclude files in /tmp - *nix
 set statusline=%{FugitiveStatusline()}
 set nobackup                      " Do not generate .sw or backup files.
@@ -76,11 +83,10 @@ set tabstop=2                     " Tab settings.
 set shiftwidth=2                  " Tab settings.
 set softtabstop=2                 " Tab settings.
 set expandtab                     " Use tabs, no spaces.
-set number
+set relativenumber
 set list
-" set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•<Paste>
+set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
 set laststatus=2                  " With 2 makes the Powerline bar appear all time.
-
 let mapleader=","                 " Change leader to comma key.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" Functions
@@ -138,16 +144,10 @@ nnoremap ; :
 " Reselect the text that was pasted previously.
 nnoremap <leader>v V`]
 " Fast go the first line, last line, and middle line, last and first character in the current line
-nnoremap <S-Up> gg
-nnoremap <S-Down> G
-nnoremap <S-m> M
 nnoremap <S-Right> $
 nnoremap <S-Left> 0
-nnoremap q b
 " Jump to the middle of the current line
 nnoremap gm :call cursor(0, len(getline('.'))/2)<CR>
-" Reload syntax
-nnoremap <Leader>fd :filetype detect<CR>
 
 " Insert mode mappings
 inoremap <leader>o <C-o>
@@ -184,6 +184,8 @@ let g:RubyRunner_open_below = 1
 let g:RubyRunner_window_size = 5
 let g:RubyRunner_keep_focus_key = '<Leader>r' " Run Ruby Runner but keep focus on file
 
+" CtrlP
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|tmp)|(\.(swp|ico|git|svn))$'
 
 " Silent highlight search 
@@ -192,13 +194,11 @@ nmap <silent> ./ :nohlsearch<CR>
 " VimEasyAlign configuration
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
 " Terminal Mappings
 tnoremap <Esc> <C-\><C-n>
-
 
 " ALE
   " Load all plugins now.
@@ -217,10 +217,18 @@ let g:airline#extensions#hunks#enabled = 0 " Show current working branch name
 let g:airline#extensions#branch#enabled = 1 " Show current working branch name
 
 " VIMCMDLine
-let cmdline_map_start = '<Leader>oc'       " Open a console (Open Console)
-let cmdline_map_quit = '<Leader>qc'        " Quit the console (Quit Console)
+let cmdline_map_start = '<Leader>oc'            " Open a console (Open Console)
+let cmdline_map_quit = '<Leader>qc'             " Quit the console (Quit Console)
 " let cmdline_map_send_and_stay = '<Leader>cs'  " Send and stay in console (Console Stay)
 " let cmdline_map_source_fum = '<Leader>fc'     " Send entire file to console (File to Console)
 let cmdline_map_send           = '<Space>'
-" Color Configuration
-let cmdline_follow_colorscheme = 1
+let cmdline_follow_colorscheme = 1              " Color Configuration
+
+" The Silver Researcher + Ack.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" vim-multicursor
+let g:multi_cursor_quit_key = ',,'
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
