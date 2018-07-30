@@ -11,41 +11,41 @@ set guifont=Fura\ Code:h12
 
 " Vim-Plug plugins
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'ElmCast/elm-vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Townk/vim-autoclose'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
 Plug 'andreyorst/SimpleSnippets-snippets'
 Plug 'andreyorst/SimpleSnippets.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'dyng/ctrlsf.vim'
-Plug 'mattn/emmet-vim'
+Plug 'ervandew/supertab'
+Plug 'henrik/vim-ruby-runner'
+Plug 'isRuslan/vim-es6'
 Plug 'jalvesaq/vimcmdline'
 Plug 'joshdick/onedark.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'kien/ctrlp.vim'
+Plug 'mattn/emmet-vim'
+Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mileszs/ack.vim'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
 Plug 'ruanyl/vim-gh-line'
+Plug 'scrooloose/nerdtree' 
 Plug 'sheerun/vim-polyglot'
+Plug 'sjl/badwolf'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rhubarb'
-Plug 'w0rp/ale'
-Plug 'ElmCast/elm-vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'isRuslan/vim-es6'
-Plug 'kien/ctrlp.vim'
-Plug 'henrik/vim-ruby-runner'
-Plug 'Yggdroot/indentLine'
-Plug 'scrooloose/nerdtree' 
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'vim-airline/vim-airline'
-Plug 'airblade/vim-gitgutter'
-Plug 'Townk/vim-autoclose'
-Plug 'tpope/vim-commentary'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-surround'
-Plug 'ervandew/supertab'
-Plug 'sjl/badwolf'
+" Plug 'vim-airline/vim-airline'
+Plug 'w0rp/ale'
 call plug#end()
 
 " RSpec.vim mappings
@@ -58,38 +58,51 @@ map <Leader>ña :call RunAllSpecs()<CR>
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd BufAdd BufRead filetype detect
 
-set colorcolumn
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " Exclude files in /tmp - *nix
-set statusline=%{FugitiveStatusline()}
-set nobackup                      " Do not generate .sw or backup files.
-set autoread                      " Enables autoload for files that change when are open
+let mapleader=","                 " Change leader to comma key.
 set autoindent                    " Enables a new line with the same indentation
-set clipboard=unnamedplus         " Use system clipboard for copy and paste.
-syntax on                         " Enable syntax
-set t_CO=256                      " Use 256 colors, terminal vim
-set nowrap                        " Quit wrapping in all files.
-set noswapfile                    " Do not generate swap files.
-set mouse=a                       " Enable mouse integration.
-set cursorline                    " Highlight the cursor line.
-set showmode                      " Show the current mode.
-set ignorecase                    " Enable functionality to upper and downcase search.
-set smartcase                     " Enable functionality to upper and downcase search.
-set hlsearch                      " Highlight the search occurrences.
-set incsearch                     " Better search experience.
-set showmatch                     " Better search experience.
+set autoread                      " Enables autoload for files that change when are open
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
-set history=100                   " Increase the buffer capacity.
-set tabstop=2                     " Tab settings.
-set shiftwidth=2                  " Tab settings.
-set softtabstop=2                 " Tab settings.
+set clipboard=unnamedplus         " Use system clipboard for copy and paste.
+set colorcolumn=100
+set cursorline                    " Highlight the cursor line.
 set expandtab                     " Use tabs, no spaces.
-set relativenumber
+set history=100                   " Increase the buffer capacity.
+set hlsearch                      " Highlight the search occurrences.
+set ignorecase                    " Enable functionality to upper and downcase search.
+set incsearch                     " Better search experience.
+set laststatus=0                  " With 2 makes the Powerline bar appear all time.
 set list
 set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
-set laststatus=2                  " With 2 makes the Powerline bar appear all time.
-let mapleader=","                 " Change leader to comma key.
+set mouse=a                       " Enable mouse integration.
+" set nobackup                      " Do not generate .sw or backup files.
+" set noswapfile                    " Do not generate swap files.
+set undofile                      " Maintain undo history between sessions
+set undodir=~/.config/nvim/undodir
+set nowrap                        " Quit wrapping in all files.
+set relativenumber
+set shiftwidth=2                  " Tab settings.
+set showmatch                     " Better search experience.
+set showmode                      " Show the current mode.
+set smartcase                     " Enable functionality to upper and downcase search.
+set softtabstop=2                 " Tab settings.
+set statusline=%{FugitiveStatusline()}
+set t_CO=256                      " Use 256 colors, terminal vim
+set tabstop=2                     " Tab settings.
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " Exclude files in /tmp - *nix
+syntax on                         " Enable syntax
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" Functions
+
+function! SyntaxToggle()
+  if(exists("g:syntax_on"))
+    syntax off
+  else
+    syntax enable
+  endif
+endfunc
+
+" Toggle between syntax enabled or disabled
+nnoremap <leader><Space> :call SyntaxToggle()<cr>
 
 " Relative numbering
 function! NumberToggle()
@@ -208,7 +221,7 @@ packloadall
   " All messages and errors will be ignored.
 silent! helptags ALL<Paste>
   " Configure Fixers
-let g:ale_linters = { 'ruby': ['rubocop'], 'javascript': ['eslint'] }
+let g:ale_linters = { 'ruby': ['rubocop'], 'javascript': ['eslint'], 'python': ['flake8', 'pylint'] }
 
 " VIM-AIRLINE
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
