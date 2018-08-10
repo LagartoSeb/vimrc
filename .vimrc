@@ -1,5 +1,5 @@
 colorscheme badwolf
-let g:gh_open_command = 'open -a Firefox '
+
 " Needed for Hyperterm correct behaviour
 set encoding=utf-8
 
@@ -11,22 +11,14 @@ set guifont=Fura\ Code:h12
 
 " Vim-Plug plugins
 call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'ElmCast/elm-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Townk/vim-autoclose'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-" Plug 'dyng/ctrlsf.vim'
-" Plug 'ervandew/supertab'
 Plug 'henrik/vim-ruby-runner'
-" Plug 'isRuslan/vim-es6'
 Plug 'jalvesaq/vimcmdline'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/ctrlp.vim'
-" Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mileszs/ack.vim'
-" Plug 'mxw/vim-jsx'
 Plug 'pangloss/vim-javascript'
 Plug 'ruanyl/vim-gh-line'
 Plug 'scrooloose/nerdtree' 
@@ -36,8 +28,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
