@@ -1,5 +1,5 @@
 colorscheme badwolf
-
+let g:gh_open_command = 'open -a Firefox '
 " Needed for Hyperterm correct behaviour
 set encoding=utf-8
 
@@ -11,48 +11,37 @@ set guifont=Fura\ Code:h12
 
 " Vim-Plug plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'ElmCast/elm-vim'
+" Plug 'ElmCast/elm-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Townk/vim-autoclose'
+" Plug 'Townk/vim-autoclose'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'andreyorst/SimpleSnippets-snippets'
-Plug 'andreyorst/SimpleSnippets.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'ervandew/supertab'
+" Plug 'dyng/ctrlsf.vim'
+" Plug 'ervandew/supertab'
 Plug 'henrik/vim-ruby-runner'
-Plug 'isRuslan/vim-es6'
+" Plug 'isRuslan/vim-es6'
 Plug 'jalvesaq/vimcmdline'
-Plug 'joshdick/onedark.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/ctrlp.vim'
-Plug 'mattn/emmet-vim'
-Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mileszs/ack.vim'
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 Plug 'pangloss/vim-javascript'
 Plug 'ruanyl/vim-gh-line'
 Plug 'scrooloose/nerdtree' 
 Plug 'sheerun/vim-polyglot'
 Plug 'sjl/badwolf'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'thoughtbot/vim-rspec'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-" Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 call plug#end()
-
-" RSpec.vim mappings
-map <Leader>lc :call RunCurrentSpecFile()<CR>
-map <Leader>ls :call RunNearestSpec()<CR>
-map <Leader>ñl :call RunLastSpec()<CR>
-map <Leader>ña :call RunAllSpecs()<CR>
 
 " Configure for Ruby development
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
@@ -74,8 +63,6 @@ set laststatus=0                  " With 2 makes the Powerline bar appear all ti
 set list
 set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
 set mouse=a                       " Enable mouse integration.
-" set nobackup                      " Do not generate .sw or backup files.
-" set noswapfile                    " Do not generate swap files.
 set undofile                      " Maintain undo history between sessions
 set undodir=~/.config/nvim/undodir
 set nowrap                        " Quit wrapping in all files.
@@ -245,3 +232,4 @@ let g:multi_cursor_quit_key = ',,'
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+
