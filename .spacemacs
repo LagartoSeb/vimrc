@@ -91,7 +91,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
-   dotspacemacs-enable-paste-transient-state t
+   dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.2
@@ -211,10 +211,12 @@ Custom functions and mappings for a pleasant experience ( ˘ ³˘)"
   (setq backup-directory-alist '(("." . "~/spacemacs/backups")))
   ;; Modify the fill column max value.
   (setq-default fill-column 100)
-  ;; Prevent Neotree changes the directory to the current file's one.
-  ;; (setq neo-autorefresh nil)
   ;; Add file extensions icons to Neotree
   (setq neo-theme 'icons)
+  ;; Don't create Emacs lockfile.
+  (setq create-lockfiles nil)
+  ;; Don't jump to root node on current file when opening Neotree.
+  (setq neo-smart-open nil)
 
 
   ;; magnars/multiple-cursors.el
