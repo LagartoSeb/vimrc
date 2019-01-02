@@ -12,10 +12,11 @@ set guifont=Fura\ Code:h12
 " Vim-Plug plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
-Plug 'henrik/vim-ruby-runner'
 Plug 'jalvesaq/vimcmdline'
+Plug 'Townk/vim-autoclose'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
@@ -43,7 +44,6 @@ set autoread                      " Enables autoload for files that change when 
 set backspace=indent,eol,start    " Make backspace behave like every other editor.
 set clipboard=unnamedplus         " Use system clipboard for copy and paste.
 set colorcolumn=100
-set cursorline                    " Highlight the cursor line.
 set expandtab                     " Use tabs, no spaces.
 set history=100                   " Increase the buffer capacity.
 set hlsearch                      " Highlight the search occurrences.
@@ -53,18 +53,20 @@ set laststatus=0                  " With 2 makes the Powerline bar appear all ti
 set list
 set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
 set mouse=a                       " Enable mouse integration.
-set undofile                      " Maintain undo history between sessions
-set undodir=~/.config/nvim/undodir
+set nocursorline                    " Highlight the cursor line.
 set nowrap                        " Quit wrapping in all files.
-set relativenumber
+set number
 set shiftwidth=2                  " Tab settings.
 set showmatch                     " Better search experience.
 set showmode                      " Show the current mode.
 set smartcase                     " Enable functionality to upper and downcase search.
 set softtabstop=2                 " Tab settings.
+set splitright
 set statusline=%{FugitiveStatusline()}
 set t_CO=256                      " Use 256 colors, terminal vim
 set tabstop=2                     " Tab settings.
+set undodir=~/.config/nvim/undodir
+set undofile                      " Maintain undo history between sessions
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " Exclude files in /tmp - *nix
 syntax on                         " Enable syntax
 
@@ -162,7 +164,8 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
-let NERDTreeIgnore = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
+let NERDTreeIgnore   = ['\.pyc$']  " Ignore .pyc files in the tree, separate them by comma
+let g:NERDTreeWinPos = "right"
 
 let g:AutoClosePairs = "() <> [] {} ''"
 
@@ -181,6 +184,9 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|tmp)|(\.(swp|ico|gi
 " Silent highlight search 
 nmap <silent> ./ :nohlsearch<CR>
 
+" Disable opening braces in a new line
+imap {{ {{}}<Esc>hi
+
 " VimEasyAlign configuration
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -198,7 +204,7 @@ packloadall
   " All messages and errors will be ignored.
 silent! helptags ALL<Paste>
   " Configure Fixers
-let g:ale_linters = { 'ruby': ['rubocop'], 'javascript': ['eslint'], 'python': ['flake8', 'pylint'] }
+let g:ale_linters = { 'ruby': ['reek', 'rubocop'], 'javascript': ['eslint'], 'python': ['flake8', 'pylint'] }
 
 " VIM-AIRLINE
 let g:airline_powerline_fonts = 1 " Populate the dictionary with the powerline symbols.
@@ -223,3 +229,8 @@ let g:multi_cursor_quit_key = ',,'
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
+set backup 
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set backupskip=/tmp/*,/private/tmp/* 
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set writebackup
