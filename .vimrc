@@ -1,5 +1,7 @@
 syntax on
 
+colorscheme badwolf
+
 let mapleader=","
 
 set autoindent
@@ -7,6 +9,7 @@ set backspace=indent,eol,start
 if has("patch-8.1.0251") | set backupdir^=~/.vim/backup// | endif
 set backupcopy=auto
 set clipboard=unnamed
+set colorcolumn=100
 set directory^=~/.vim/swap//
 set expandtab
 set history=100
@@ -29,16 +32,21 @@ set t_CO=256
 set tabstop=2
 set undodir^=~/.vim/undo//
 set undofile
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set writebackup
 
 call plug#begin("~/.vim/plugged")
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'sjl/badwolf'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'roman/golden-ratio'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
-Plug 'w0rp/ale'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " CONFIGURATION
@@ -52,17 +60,15 @@ nnoremap <leader>w<Right> <C-w>l
 let g:NERDTreeWinPos="right"
 nnoremap <leader>z :NERDTreeToggle<CR>
 
-"   ctrlp:
-let g:ctrlp_cache_dir=$HOME . "/.cache/ctrlp"
-let g:ctrlp_clear_cache_on_exit=0
-let g:ctrlp_custom_ignore="\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$"
-let g:ctrlp_user_command=[".git/", "git ls-files --cached --others  --exclude-standard %s"]
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-"   ack.vim:
-let g:ackprg = "ag --nogroup --nocolor --column"
+" fzf
+nnoremap <C-p> :Files<Cr>
+nnoremap <C-g> :Rg<Cr>
+nnoremap <C-b> :Buffers<Cr>
+nnoremap <silent> <Leader>f :Ag <C-R><C-W><CR>
 
 "   ale:
 packloadall
 silent! helptags ALL<Paste>
 let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
