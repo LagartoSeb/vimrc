@@ -4,6 +4,8 @@ colorscheme badwolf
 
 let mapleader=","
 
+hi Normal ctermbg=none
+
 set autoindent
 set backspace=indent,eol,start
 if has("patch-8.1.0251") | set backupdir^=~/.vim/backup// | endif
@@ -36,17 +38,17 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set writebackup
 
 call plug#begin("~/.vim/plugged")
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'sjl/badwolf'
-Plug 'airblade/vim-gitgutter'
-Plug 'altercation/vim-colors-solarized'
 Plug 'mileszs/ack.vim'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'roman/golden-ratio'
 Plug 'scrooloose/nerdtree'
+Plug 'sjl/badwolf'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+" Plug 'dense-analysis/ale'
 call plug#end()
 
 " CONFIGURATION
@@ -62,13 +64,13 @@ nnoremap <leader>z :NERDTreeToggle<CR>
 
 " fzf
 nnoremap <C-p> :Files<Cr>
-nnoremap <C-g> :Rg<Cr>
 nnoremap <C-b> :Buffers<Cr>
-nnoremap <silent> <Leader>f :Ag <C-R><C-W><CR>
+" find definition
+nnoremap <Leader>fd :Ag def <C-R><C-W>$<CR>
+" find usage
+nnoremap <Leader>fu :Ag <C-R><C-W><CR>
 
 "   ale:
 packloadall
 silent! helptags ALL<Paste>
 let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
-
-let g:ackprg = 'ag --nogroup --nocolor --column'
