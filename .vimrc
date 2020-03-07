@@ -1,7 +1,5 @@
 syntax on
 
-colorscheme badwolf
-
 let mapleader=","
 
 hi Normal ctermbg=none
@@ -23,7 +21,6 @@ set mouse=a
 set nobackup
 set nocursorline
 set nowrap
-set number
 set shiftwidth=2
 set showmatch
 set showmode
@@ -36,31 +33,66 @@ set undodir^=~/.vim/undo//
 set undofile
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set writebackup
+set number relativenumber
+set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.md
 
 call plug#begin("~/.vim/plugged")
-Plug 'airblade/vim-gitgutter'
+Plug 'bhurlow/vim-parinfer'
+Plug 'dense-analysis/ale'
+Plug 'dominikduda/vim_current_word'
+Plug 'guns/vim-clojure-static'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'l04m33/vlime', {'rtp': 'vim/'}
+Plug 'maxboisvert/vim-simple-complete'
 Plug 'mileszs/ack.vim'
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'roman/golden-ratio'
 Plug 'scrooloose/nerdtree'
-Plug 'sjl/badwolf'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
-" Plug 'dense-analysis/ale'
 call plug#end()
 
-" CONFIGURATION
+
+" vim-fireplace mappings
+au BufEnter *.clj nnoremap  <buffer> cpt :Eval<CR>
+au BufEnter *.cljs nnoremap <buffer> cpt :Eval<CR>
+au BufEnter *.cljs nnoremap <buffer> cpe :%Eval<CR>
+au BufEnter *.cljs nnoremap <buffer> cpw :%Eval<CR><CR>
+
+
 "   system:
 nnoremap <leader>w<Left> <C-w>h
 nnoremap <leader>w<Down> <C-w>j
 nnoremap <leader>w<Up> <C-w>k
 nnoremap <leader>w<Right> <C-w>l
+" don't jump when highlighting occurrences
+nnoremap * *``
+
+
+"   Clojure rainbow parens:
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+      \  'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+      \  'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+      \  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \  'separately': {
+      \      '*': 0,
+      \      'clojure': {},
+      \      'clojurescript': {},
+      \  }
+      \}
+
+
+"   vlime:
+let g:vlime_enable_autodoc = v:true
+let g:vlime_window_settings = {'sldb': {'pos': 'belowright', 'vertical': v:true}, 'inspector': {'pos': 'belowright', 'vertical': v:true}, 'preview': {'pos': 'belowright', 'size': v:null, 'vertical': v:true}}
+
 
 "   nerdtree:
 let g:NERDTreeWinPos="right"
 nnoremap <leader>z :NERDTreeToggle<CR>
+
 
 " fzf
 nnoremap <C-p> :Files<Cr>
@@ -70,7 +102,8 @@ nnoremap <Leader>fd :Ag def <C-R><C-W>$<CR>
 " find usage
 nnoremap <Leader>fu :Ag <C-R><C-W><CR>
 
+
 "   ale:
 packloadall
 silent! helptags ALL<Paste>
-let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
+let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"], "clojure": ["clj-kondo", "joker"] }
