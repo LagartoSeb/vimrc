@@ -4,6 +4,8 @@ let mapleader=","
 
 hi Normal ctermbg=none
 
+colorscheme gruvbox
+
 set autoindent
 set backspace=indent,eol,start
 if has("patch-8.1.0251") | set backupdir^=~/.vim/backup// | endif
@@ -15,7 +17,7 @@ set expandtab
 set history=100
 set hlsearch
 set incsearch
-set list " invisibles config. related
+set list
 set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
 set mouse=a
 set nobackup
@@ -35,6 +37,9 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set writebackup
 set number relativenumber
 set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.md
+
+hi CurrentWord ctermbg=65
+hi CurrentWordTwins ctermbg=100
 
 call plug#begin("~/.vim/plugged")
 Plug 'bhurlow/vim-parinfer'
@@ -107,3 +112,21 @@ nnoremap <Leader>fu :Ag <C-R><C-W><CR>
 packloadall
 silent! helptags ALL<Paste>
 let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"], "clojure": ["clj-kondo", "joker"] }
+
+
+"    Custom functions
+autocmd BufNewFile,BufRead *.rb call AddRubyFileHeaders()
+function! AddRubyFileHeaders()
+  let l:filename = expand("%")
+
+  call append(0, "# frozen_string_literal: true")
+  call append(1, "")
+
+  if filename =~# "_spec\.rb$"
+    call append(2, "require 'rails_helper'")
+    call append(3, "")
+    call append(4, "RSpec.describe  do")
+    call append(5, "end")
+    call cursor(5, 16)
+  endif
+endfunction
