@@ -51,8 +51,8 @@ Plug 'maxboisvert/vim-simple-complete'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+Plug 'camspiers/lens.vim'
 call plug#end()
-
 
 "   system
 nnoremap <leader>w<Left> <C-w>h
@@ -65,11 +65,12 @@ nnoremap * *``
 noremap Zi <c-w>_ \| <c-w>\|
 noremap Zo <c-w>=
 
+"   lens.vim
+let g:lens#disabled_filetypes = ['nerdtree']
 
 "   nerdtree
-let g:NERDTreeWinPos="right"
+" let g:NERDTreeWinPos="right"
 nnoremap <leader>z :NERDTreeToggle<CR>
-
 
 "   fzf
 let rgCommand = 'rg --column --line-number --no-heading --color=always --smart-case'
@@ -112,26 +113,15 @@ nnoremap <Leader>flv :FindVariableLocal    <C-R><C-W><CR>
 nnoremap <Leader>fme :FindMemoization      <C-R><C-W><CR>
 nnoremap <Leader>fo  :FindOccurrence       <C-R><C-W><CR>
 
-
 "   ale
 packloadall
 silent! helptags ALL<Paste>
 let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"], "clojure": ["clj-kondo", "joker"] }
 
 
-"    Custom functions
-" autocmd BufNewFile,BufRead *.rb call AddRubyFileHeaders()
-" function! AddRubyFileHeaders()
-"   let l:filename = expand("%")
-" 
-"   call append(0, "# frozen_string_literal: true")
-"   call append(1, "")
-" 
-"   if filename =~# "_spec\.rb$"
-"     call append(2, "require 'rails_helper'")
-"     call append(3, "")
-"     call append(4, "RSpec.describe  do")
-"     call append(5, "end")
-"     call cursor(5, 16)
-"   endif
-" endfunction
+"   remember folds after quitting
+augroup RememberFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
