@@ -45,13 +45,13 @@ hi CurrentWordTwins ctermbg=100
 call plug#begin("~/.vim/plugged")
 Plug 'dense-analysis/ale'
 Plug 'dominikduda/vim_current_word'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'maxboisvert/vim-simple-complete'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'camspiers/lens.vim'
+Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 "   system
@@ -64,9 +64,6 @@ nnoremap * *``
 "   zoom buffers¬
 noremap Zi <c-w>_ \| <c-w>\|
 noremap Zo <c-w>=
-
-"   lens.vim
-let g:lens#disabled_filetypes = ['nerdtree']
 
 "   nerdtree
 " let g:NERDTreeWinPos="right"
@@ -97,7 +94,7 @@ command! -nargs=* -bang FindOccurrence       call RgWrapper("%s",          <q-ar
 
 nnoremap <C-b> :Buffers<Cr>
 nnoremap <C-p> :Files<Cr>
-nnoremap <C-l> :Lines<Cr>
+nnoremap <C-l> :BLines<Cr>
 nnoremap <C-g> :Rg<Cr>
 
 "   find functions
@@ -113,11 +110,29 @@ nnoremap <Leader>flv :FindVariableLocal    <C-R><C-W><CR>
 nnoremap <Leader>fme :FindMemoization      <C-R><C-W><CR>
 nnoremap <Leader>fo  :FindOccurrence       <C-R><C-W><CR>
 
+
 "   ale
 packloadall
 silent! helptags ALL<Paste>
 let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"], "clojure": ["clj-kondo", "joker"] }
 
+
+"    Custom functions
+" autocmd BufNewFile,BufRead *.rb call AddRubyFileHeaders()
+" function! AddRubyFileHeaders()
+"   let l:filename = expand("%")
+" 
+"   call append(0, "# frozen_string_literal: true")
+"   call append(1, "")
+" 
+"   if filename =~# "_spec\.rb$"
+"     call append(2, "require 'rails_helper'")
+"     call append(3, "")
+"     call append(4, "RSpec.describe  do")
+"     call append(5, "end")
+"     call cursor(5, 16)
+"   endif
+" endfunction
 
 "   remember folds after quitting
 augroup RememberFolds
@@ -125,3 +140,9 @@ augroup RememberFolds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent! loadview
 augroup END
+
+func! Note(...)
+  exec "e " . expand('~/Documents/zettlr/') . strftime('%Y/%m/%Y%m%d%H%M%S') . '.md'
+endfunc
+
+command! -nargs=* Note call Note(<f-args>)
