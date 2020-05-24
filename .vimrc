@@ -38,6 +38,7 @@ set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.m
 set cursorcolumn
 set cursorline
 set laststatus=2
+set autowriteall
 
 hi CurrentWord ctermbg=65
 hi CurrentWordTwins ctermbg=100
@@ -55,18 +56,16 @@ Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 "   system
-nnoremap <leader>w<Left> <C-w>h
-nnoremap <leader>w<Down> <C-w>j
-nnoremap <leader>w<Up> <C-w>k
+nnoremap <leader>w<Left>  <C-w>h
+nnoremap <leader>w<Down>  <C-w>j
+nnoremap <leader>w<Up>    <C-w>k
 nnoremap <leader>w<Right> <C-w>l
-"   don't jump when highlighting occurrences
-nnoremap * *``
 "   zoom buffers¬
 noremap Zi <c-w>_ \| <c-w>\|
 noremap Zo <c-w>=
 
 "   nerdtree
-" let g:NERDTreeWinPos="right"
+let g:NERDTreeWinPos="right"
 nnoremap <leader>z :NERDTreeToggle<CR>
 
 "   fzf
@@ -110,39 +109,13 @@ nnoremap <Leader>flv :FindVariableLocal    <C-R><C-W><CR>
 nnoremap <Leader>fme :FindMemoization      <C-R><C-W><CR>
 nnoremap <Leader>fo  :FindOccurrence       <C-R><C-W><CR>
 
-
 "   ale
 packloadall
 silent! helptags ALL<Paste>
-let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"], "clojure": ["clj-kondo", "joker"] }
-
-
-"    Custom functions
-" autocmd BufNewFile,BufRead *.rb call AddRubyFileHeaders()
-" function! AddRubyFileHeaders()
-"   let l:filename = expand("%")
-" 
-"   call append(0, "# frozen_string_literal: true")
-"   call append(1, "")
-" 
-"   if filename =~# "_spec\.rb$"
-"     call append(2, "require 'rails_helper'")
-"     call append(3, "")
-"     call append(4, "RSpec.describe  do")
-"     call append(5, "end")
-"     call cursor(5, 16)
-"   endif
-" endfunction
-
-"   remember folds after quitting
-augroup RememberFolds
-  autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
-augroup END
+let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
 
 func! Note(...)
-  exec "e " . expand('~/Documents/zettlr/') . strftime('%Y/%m/%Y%m%d%H%M%S') . '.md'
+  exec "sp " . expand('~/Documents/zettlr/') . strftime('%Y/%m/%Y%m%d%H%M%S') . '.md'
 endfunc
 
 command! -nargs=* Note call Note(<f-args>)
