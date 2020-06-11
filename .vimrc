@@ -2,7 +2,7 @@ syntax on
 
 let mapleader=","
 
-colorscheme gruvbox
+colorscheme badwolf
 
 set autoindent
 set backspace=indent,eol,start
@@ -38,7 +38,7 @@ set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.m
 set cursorcolumn
 set cursorline
 set laststatus=2
-set autowriteall
+set paste
 
 hi CurrentWord ctermbg=65
 hi CurrentWordTwins ctermbg=100
@@ -52,24 +52,25 @@ Plug 'maxboisvert/vim-simple-complete'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 "   system
-nnoremap <leader>w<Left>  <C-w>h
-nnoremap <leader>w<Down>  <C-w>j
-nnoremap <leader>w<Up>    <C-w>k
+nnoremap <leader>w<Left> <C-w>h
+nnoremap <leader>w<Down> <C-w>j
+nnoremap <leader>w<Up> <C-w>k
 nnoremap <leader>w<Right> <C-w>l
+"   don't jump when highlighting occurrences
+nnoremap * *``
 "   zoom buffers¬
-noremap Zi <c-w>_ \| <c-w>\|
-noremap Zo <c-w>=
+noremap <leader>zi <c-w>_ \| <c-w>\|
+noremap <leader>zo <c-w>=
 
 "   nerdtree
 let g:NERDTreeWinPos="right"
-nnoremap <leader>z :NERDTreeToggle<CR>
+nnoremap <leader><Space> :NERDTreeToggle<CR>
 
 "   fzf
-let rgCommand = 'rg --column --line-number --no-heading --color=always --smart-case'
+let rgCommand = "rg --column --line-number --no-heading --color=always --smart-case"
 
 function! Capitalize(string)
   return substitute(a:string, '\(\<\w\+\>\)', '\u\1', 'g')
@@ -79,21 +80,21 @@ function! RgWrapper(identificator, query)
   call fzf#vim#grep(printf(printf(" %s '%s'", g:rgCommand, a:identificator), a:query), 1, fzf#vim#with_preview(), 0)
 endfunction
 
-command! -nargs=* -bang FindMethodInstance   call RgWrapper("def %s",      <q-args>)
-command! -nargs=* -bang FindMethodClass      call RgWrapper("def self.%s", <q-args>)
-command! -nargs=* -bang FindConstant         call RgWrapper("%s = ",       toupper(<q-args>))
-command! -nargs=* -bang FindClass            call RgWrapper("class %s",    Capitalize(<q-args>))
-command! -nargs=* -bang FindModule           call RgWrapper("module %s",   Capitalize(<q-args>))
-command! -nargs=* -bang FindVariableGlobal   call RgWrapper("\\$%s = ",    <q-args>)
-command! -nargs=* -bang FindVariableClass    call RgWrapper("@@%s = ",     <q-args>)
-command! -nargs=* -bang FindVariableInstance call RgWrapper("@%s = ",      <q-args>)
-command! -nargs=* -bang FindVariableLocal    call RgWrapper("%s = ",       <q-args>)
-command! -nargs=* -bang FindMemoization      call RgWrapper("@%s ||= ",    <q-args>)
-command! -nargs=* -bang FindOccurrence       call RgWrapper("%s",          <q-args>)
+command! -nargs=* -bang FindMethodInstance   call RgWrapper("def +%s",      <q-args>)
+command! -nargs=* -bang FindMethodClass      call RgWrapper("def +self.%s", <q-args>)
+command! -nargs=* -bang FindConstant         call RgWrapper("%s += +",      toupper(<q-args>))
+command! -nargs=* -bang FindClass            call RgWrapper("class +%s",    Capitalize(<q-args>))
+command! -nargs=* -bang FindModule           call RgWrapper("module +%s",   Capitalize(<q-args>))
+command! -nargs=* -bang FindVariableGlobal   call RgWrapper("\\$%s += +",   <q-args>)
+command! -nargs=* -bang FindVariableClass    call RgWrapper("@@%s += +",    <q-args>)
+command! -nargs=* -bang FindVariableInstance call RgWrapper("@%s += +",     <q-args>)
+command! -nargs=* -bang FindVariableLocal    call RgWrapper("%s += +",      <q-args>)
+command! -nargs=* -bang FindMemoization      call RgWrapper("@%s +||= +",   <q-args>)
+command! -nargs=* -bang FindOccurrence       call RgWrapper("%s",           <q-args>)
 
 nnoremap <C-b> :Buffers<Cr>
 nnoremap <C-p> :Files<Cr>
-nnoremap <C-l> :BLines<Cr>
+nnoremap <C-l> :Lines<Cr>
 nnoremap <C-g> :Rg<Cr>
 
 "   find functions
@@ -112,7 +113,7 @@ nnoremap <Leader>fo  :FindOccurrence       <C-R><C-W><CR>
 "   ale
 packloadall
 silent! helptags ALL<Paste>
-let g:ale_linters = { "ruby": ["reek", "rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
+let g:ale_linters = { "ruby": ["rubocop"], "javascript": ["eslint"], "python": ["flake8", "pylint"] }
 
 func! Note(...)
   exec "sp " . expand('~/Documents/zettlr/') . strftime('%Y/%m/%Y%m%d%H%M%S') . '.md'
