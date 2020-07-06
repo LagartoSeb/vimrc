@@ -4,9 +4,7 @@ let mapleader=","
 
 colorscheme badwolf
 
-set autoindent
 set backspace=indent,eol,start
-if has("patch-8.1.0251") | set backupdir^=~/.vim/backup// | endif
 set backupcopy=auto
 set clipboard=unnamed
 set colorcolumn=100
@@ -20,15 +18,13 @@ set mouse=a
 set nobackup
 set nocursorline
 set nowrap
-set shiftwidth=2
 set showmatch
 set showmode
-set splitright
+set splitright splitbelow
 set swapfile
-set t_CO=256
-set tabstop=2
-set softtabstop=2
-set expandtab
+set t_CO=<t_CO>
+set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab shiftround
+set autoindent
 set undodir^=~/.vim/undo//
 set undofile
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
@@ -38,17 +34,17 @@ set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.m
 set cursorcolumn
 set cursorline
 set laststatus=2
-set paste
 
 hi CurrentWord ctermbg=65
 hi CurrentWordTwins ctermbg=100
 
 call plug#begin("~/.vim/plugged")
+Plug 'mhinz/vim-startify'
 Plug 'dense-analysis/ale'
 Plug 'dominikduda/vim_current_word'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'maxboisvert/vim-simple-complete'
+Plug 'thaerkh/vim-indentguides'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -120,3 +116,6 @@ func! Note(...)
 endfunc
 
 command! -nargs=* Note call Note(<f-args>)
+
+"   startify
+let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
