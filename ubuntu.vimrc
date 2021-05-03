@@ -1,4 +1,5 @@
 syntax on
+
 filetype plugin indent on
 
 let mapleader=","
@@ -18,24 +19,21 @@ set incsearch
 set list
 set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:•
 set mouse=a
-set nobackup
-set nocursorline
 set nowrap
 set showmatch
 set showmode
-set splitright splitbelow
+set splitright
+set splitbelow
 set swapfile
 set t_CO=<t_CO>
-set tabstop=2 softtabstop=0 expandtab shiftwidth=2 shiftround
 set autoindent
 set undofile
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 set writebackup
 set number
 set re=1 " https://github.com/joshukraine/dotfiles/blob/master/vim-performance.md
-" set cursorcolumn
-" set cursorline
 set laststatus=2
+set relativenumber
 
 hi CurrentWord ctermbg=65
 hi CurrentWordTwins ctermbg=100
@@ -48,11 +46,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 't9md/vim-ruby-xmpfilter'
 Plug 'henrik/vim-ruby-runner'
 Plug 'vim-test/vim-test'
-" Plug 'christoomey/vim-tmux-runner'
 Plug '/home/seb/.vim/plugged/me/vim-tmux-runner'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 "   system
@@ -65,8 +62,6 @@ nnoremap * *``
 "   zoom buffers¬
 noremap <leader>zi <c-w>_ \| <c-w>\|
 noremap <leader>zo <c-w>=
-"   remap esc from terminal mode
-" tnoremap <Esc> <C-\><C-n>
 
 "   nerdtree
 let g:NERDTreeWinPos="right"
@@ -128,22 +123,6 @@ command! -nargs=* Note call Note(<f-args>)
 
 let g:ale_echo_msg_format = '💩 %linter% 💩 %s'
 
-" Running Ruby code
-" Enable seeing-is-believing mappings only for Ruby
-let g:xmpfilter_cmd = "seeing_is_believing"
-
-autocmd FileType ruby nmap <buffer> <F4> <Plug>(seeing_is_believing-mark)
-autocmd FileType ruby xmap <buffer> <F4> <Plug>(seeing_is_believing-mark)
-autocmd FileType ruby imap <buffer> <F4> <Plug>(seeing_is_believing-mark)
-
-autocmd FileType ruby nmap <buffer> <F6> <Plug>(seeing_is_believing-clean)
-autocmd FileType ruby xmap <buffer> <F6> <Plug>(seeing_is_believing-clean)
-autocmd FileType ruby imap <buffer> <F6> <Plug>(seeing_is_believing-clean)
-
-autocmd FileType ruby nmap <buffer> <F5> <Plug>(seeing_is_believing-run)
-autocmd FileType ruby xmap <buffer> <F5> <Plug>(seeing_is_believing-run)
-autocmd FileType ruby imap <buffer> <F5> <Plug>(seeing_is_believing-run)
-
 " Run ruby code using leader-r only when inside a .rb file
 " Overriden by the henrik/vim-ruby-runner
 " au BufRead, *.rb nmap <leader>z :!ruby %<cr>
@@ -165,10 +144,29 @@ nmap <silent> <C-:> :TestVisit<CR>
 
 " vim-tmux-runner, run ruby tests with vim-test and vim-tmux-runner
 let test#strategy = "vtr"
-let test#ruby#rspec#options = {'all': '--backtrace --format documentation'}
+" let test#ruby#rspec#options = {'all': '--backtrace --format documentation'}
+let test#ruby#rspec#options = {'all': '--format documentation'}
 
 " solution to make terminal mode, ESC and arrows work
 tnoremap <Esc> <C-W>N
 tnoremap <Esc><Esc> <C-W>N
 set timeout timeoutlen=1000  " Default
 set ttimeout ttimeoutlen=100  " Set by defaults.vim
+
+" Coc mappings
+" nmap <leader>gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+" nmap <leader>gr <Plug>(coc-references)
+" nmap <leader>gy <Plug>(coc-type-definition)
+" nmap <leader>gi <Plug>(coc-implementation)
+" inoremap <silent><expr> <TAB>
+"   \ pumvisible() ? "\<C-n>" :
+"   \ <SID>check_back_space() ? "\<TAB>" :
+"   \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+" 
+" let g:coc_global_extensions = ['coc-solargraph']
