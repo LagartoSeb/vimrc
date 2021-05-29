@@ -13,18 +13,7 @@ set undodir=~/.config/nvim/.undo//
 " - neovim >= 0.5
 " - rust-analyzer: https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
 
-" Steps:
-" - :PlugInstall
-" - Restart
-
 call plug#begin('~/.vim/plugged')
-" CUSTOM PLUGINS:
-Plug 'dominikduda/vim_current_word'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Yggdroot/indentLine'
-Plug 'rust-lang/rust.vim'
 " RUST-NVIM PLUGINS:
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
@@ -37,9 +26,15 @@ Plug 'hrsh7th/vim-vsnip'
 " Optional
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 " Some color scheme other then default
 Plug 'arcticicestudio/nord-vim'
+" CUSTOM PLUGINS:
+Plug 'dominikduda/vim_current_word'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Yggdroot/indentLine'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 syntax enable
