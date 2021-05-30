@@ -13,7 +13,7 @@ set undodir=~/.config/nvim/.undo//
 " - neovim >= 0.5
 " - rust-analyzer: https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
 
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 " RUST-NVIM PLUGINS:
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
